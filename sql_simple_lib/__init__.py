@@ -2,7 +2,7 @@ from sql_builder import SQLBuilder
 
 sql_builder = SQLBuilder()
 
-sql_builder.SELECT("a=name", "{b} + {c} = data")
-sql_builder.FROM("users", "u")
+sql_builder.SELECT("o.OrderID = Order", "Client: {c.CustomerName} = Name")
+sql_builder.FROM("Customers = c", "Orders = o")
 
 print(sql_builder)

@@ -1,7 +1,7 @@
 from typing import Optional
 
-from .functions.From import From
-from .functions.Select import Select
+from .commands.From import From
+from .commands.Select import Select
 
 
 class SQLBuilder:
