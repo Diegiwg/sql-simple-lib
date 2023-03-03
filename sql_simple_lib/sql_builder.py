@@ -41,4 +41,6 @@ class SQLBuilder:
             self._from = f"FROM {table_name} AS {as_name}"
             return
 
+        # TODO: Implement option for multiple tables, with AS command being possible.
+
         self._from = f"FROM {table_name}"
