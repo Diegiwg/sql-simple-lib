@@ -1,18 +1,8 @@
-from typing import Optional
+class Select:
+    def __init__(self, parent) -> None:
+        self.parent = parent
 
-
-class SQLBuilder:
-    def __init__(self) -> None:
-        self._from = str()
-        self._select = str("*")
-
-    def __repr__(self) -> str:
-        return self.CODE()
-
-    def CODE(self):
-        return f"{self._select}\n{self._from};"
-
-    def SELECT(self, *fields: str):
+    def execute(self, *fields: str):
         """The SELECT command is used to select data from a database.
         The data returned is stored in a result table, called the result set."""
 
@@ -53,21 +43,4 @@ class SQLBuilder:
                     m_fields.append(f"{' + '.join(m_multi_field)} AS [{field_name}]")
 
         m_fields_compiled = ", ".join(m_fields)
-        self._select = f"SELECT {m_fields_compiled}"
-
-    def FROM(self, table_name: str, as_name: Optional[str] = None):
-        """The FROM command is used to specify which table to select or delete data from."""
-
-        if not isinstance(table_name, str) or table_name == "":
-            raise ValueError("table_name must be a non-empty string")
-
-        if as_name:
-            if not isinstance(as_name, str) or as_name == "":
-                raise ValueError("as_name must be a non-empty string")
-
-            self._from = f"FROM {table_name} AS {as_name}"
-            return
-
-        # TODO: Implement option for multiple tables, with AS command being possible.
-
-        self._from = f"FROM {table_name}"
+        self.parent._select = f"SELECT {m_fields_compiled}"
