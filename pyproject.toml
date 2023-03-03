@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "sql-simple-lib"
+version = "0.1.0"
+description = ""
+license = "Apache-2.0"
+authors = ["Diego Queiroz <diegiwg@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sql_simple_lib"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
