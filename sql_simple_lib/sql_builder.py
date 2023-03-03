@@ -30,10 +30,27 @@ class SQLBuilder:
             else:
                 field_value, field_name = field.split("=")
 
-                # TODO: Implement multi-field `string formatting` support in a single AS command.
-                field_value = field_value.replace("{", "").replace("}", "")
+                field_value = field_value.strip()
+                field_name = field_name.strip()
 
-                m_fields.append(f"{field_value.strip()} AS [{field_name.strip()}]")
+                if field_value.find("{") == -1:
+                    m_fields.append(f"{field_value} AS [{field_name}]")
+
+                else:
+                    m_multi_field = []
+                    for _ in range(field_value.count("{")):
+                        _start = field_value.find("{")
+                        _end = field_value.find("}")
+
+                        _name = field_value[_start + 1 : _end]
+                        _value = field_value[:_start]
+
+                        m_multi_field.append(f"'{_value}'")
+                        m_multi_field.append(_name)
+
+                        field_value = field_value[_end + 1 :]
+
+                    m_fields.append(f"{' + '.join(m_multi_field)} AS [{field_name}]")
 
         m_fields_compiled = ", ".join(m_fields)
         self._select = f"SELECT {m_fields_compiled}"
